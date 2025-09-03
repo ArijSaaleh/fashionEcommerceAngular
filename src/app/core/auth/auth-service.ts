@@ -17,7 +17,7 @@ export interface JwtResponse {
   token: string;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: `root`
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth'; // backend base URL
