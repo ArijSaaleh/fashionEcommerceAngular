@@ -1,0 +1,24 @@
+<div class="max-w-2xl mx-auto p-6 bg-white shadow rounded">
+  <h2 class="text-2xl font-bold mb-4">{{ editing ? 'Edit' : 'Add' }} Product</h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+    <input formControlName="name" placeholder="Name" class="w-full border p-2 rounded" />
+    <textarea formControlName="description" placeholder="Description" class="w-full border p-2 rounded"></textarea>
+    <input type="number" formControlName="price" placeholder="Price" class="w-full border p-2 rounded" />
+    <input formControlName="brand" placeholder="Brand" class="w-full border p-2 rounded" />
+    <input type="number" formControlName="categoryId" placeholder="Category ID" class="w-full border p-2 rounded" />
+    <input type="number" formControlName="stockQuantity" placeholder="Stock Quantity" class="w-full border p-2 rounded" />
+
+    <!-- Dynamic Images -->
+    <div formArrayName="imageUrls">
+      <label class="block font-medium mb-2">Images</label>
+      <div *ngFor="let ctrl of imageUrls.controls; let i = index" class="flex space-x-2 mb-2">
+        <input [formControlName]="i" placeholder="Image URL" class="flex-1 border p-2 rounded" />
+        <button type="button" class="bg-red-600 text-white px-3 py-1 rounded" (click)="removeImage(i)">X</button>
+      </div>
+      <button type="button" class="bg-blue-600 text-white px-3 py-1 rounded" (click)="addImage()">+ Add Image</button>
+    </div>
+
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">{{ editing ? 'Update' : 'Create' }}</button>
+  </form>
+</div>

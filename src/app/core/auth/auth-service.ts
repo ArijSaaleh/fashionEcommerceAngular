@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError, Observable, of, tap} from 'rxjs';
 
 export interface LoginRequest {
   email: string;
@@ -33,7 +33,17 @@ export class AuthService {
   }
 
   register(req: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, req);
+    return this.http.post(`${this.apiUrl}/register`, req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMsg = 'An error occurred. Please try again.';
+        if (error.status === 400) {
+          errorMsg = 'Please provide valid registration details.';
+        } else if (error.status === 409) {
+          errorMsg = 'Email is already in use.';
+        }
+        return of({ error: true, message: errorMsg });
+      })
+    );
   }
 
   logout(): void {

@@ -35,7 +35,7 @@ export class Login{
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.error(err);
+       // console.error(err);
         this.errorMsg = 'Invalid credentials';
       }
     });
